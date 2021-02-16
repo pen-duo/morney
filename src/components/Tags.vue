@@ -9,8 +9,8 @@
           <li
             v-for="item in dataSource"
             :key="item"
-            @click="selected(item)"
-            :class="{ active: activeItem === item }"
+            @click="toggle(item)"
+            :class="{ selected: selectedTags.indexOf(item) >= 0 }"
           >
             {{ item }}
           </li>
@@ -27,9 +27,13 @@ import { Component, Prop } from "vue-property-decorator";
 export default class Tags extends Vue {
   @Prop() dataSource: string[] | undefined;
   selectedTags: string[] = [];
-  activeItem = "衣";
-  selected(item: string) {
-    this.activeItem = item;
+  toggle(tag: string) {
+    const index = this.selectedTags.indexOf(tag);
+    if (index >= 0) {
+      this.selectedTags.splice(index, 1);
+    } else {
+      this.selectedTags.push(tag);
+    }
   }
 }
 </script>
@@ -45,12 +49,17 @@ export default class Tags extends Vue {
     > ul {
       display: flex;
       > li {
+        $bg: #d9d9d9;
         height: 24px;
         line-height: 24px;
         background: #d9d9d9;
         border-radius: 12px;
         padding: 0 16px;
         margin-right: 12px;
+        &.selected {
+          background: darken($bg, 50%);
+          color: #fff;
+        }
       }
     }
   }
@@ -64,8 +73,5 @@ export default class Tags extends Vue {
       padding: 0 3px;
     }
   }
-}
-.active {
-  color: red;
 }
 </style>
