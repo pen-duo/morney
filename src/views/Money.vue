@@ -16,16 +16,12 @@ import Tags from "@/components/Tags.vue";
 import Notes from "@/components/Notes.vue";
 import Types from "@/components/Types.vue";
 import NumberPad from "@/components/NumberPad.vue";
-import model from "@/model.ts";
-const recordList: Record[] = model.fetch();
-type Record = {
-  tags: string[];
-  notes: string;
-  type: string;
-  amount: number;
-  createdAt?: Date;
-};
+import recordListModel from "@/models/recordListModel.ts";
+import tagListModel from "@/models/tagListModel.ts";
 
+const recordList = recordListModel.fetch();
+
+const tagList = tagListModel.fetch();
 @Component({
   components: {
     Tags,
@@ -36,8 +32,8 @@ type Record = {
 })
 export default class Money extends Vue {
   tags = ["衣", "食", "住", "行"];
-  recordList: Record[] = recordList;
-  record: Record = {
+  recordList: RecordItem[] = recordList;
+  record: RecordItem = {
     tags: [],
     notes: "",
     type: "-",
@@ -51,13 +47,13 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    const record2: Record = model.clone(this.record);
+    const record2: RecordItem = recordListModel.clone(this.record);
     record2.createdAt = new Date();
     this.recordList.push(record2);
   }
   @Watch("recordList")
   onRecordListChange() {
-    model.save(this.recordList);
+    recordListModel.save(this.recordList);
   }
 }
 </script>
