@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div class="tags">
       <div class="news">
         <button @click="create">新增标签</button>
@@ -17,7 +16,6 @@
         </ul>
       </div>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -54,6 +52,8 @@ export default class Tags extends Vue {
   flex-grow: 1;
   display: flex;
   flex-direction: column-reverse;
+  background: white;
+  min-height: calc(100% - 64px);
   > .current {
     > ul {
       display: flex;

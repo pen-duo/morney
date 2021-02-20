@@ -3,7 +3,11 @@
     <Layout class-prefix="layout">
       <NumberPad :value.sync="record.amount" @submit="saveRecord" />
       <Types :value.sync="record.type" />
-      <Notes @update:value="onUpdateNotes" />
+      <Notes
+        filed-name="备注"
+        placeholder="在这里输入备注"
+        @update:value="onUpdateNotes"
+      />
       <Tags :data-source.sync="tags" @update:selected="onUpdateTags" />
     </Layout>
   </div>
@@ -17,11 +21,9 @@ import Notes from "@/components/Notes.vue";
 import Types from "@/components/Types.vue";
 import NumberPad from "@/components/NumberPad.vue";
 import recordListModel from "@/models/recordListModel.ts";
-import tagListModel from "@/models/tagListModel.ts";
 
 const recordList = recordListModel.fetch();
 
-const tagList = tagListModel.fetch();
 @Component({
   components: {
     Tags,

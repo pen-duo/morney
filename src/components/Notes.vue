@@ -1,16 +1,15 @@
 <template>
   <div>
     <label class="notes">
-      {{ value }}
-      <span class="name">备注</span>
-      <input type="text" placeholder="在这里输入备注" v-model="value" />
+      <span class="name">{{ filedName }}</span>
+      <input type="text" :placeholder="placeholder" v-model="value" />
     </label>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Watch } from "vue-property-decorator";
+import { Component, Prop, Watch } from "vue-property-decorator";
 @Component
 export default class Notes extends Vue {
   value = "";
@@ -18,13 +17,14 @@ export default class Notes extends Vue {
   onValueChanged(value: string) {
     this.$emit("update:value", value);
   }
+  @Prop({ required: true }) filedName!: string;
+  @Prop() placeholder?: string;
 }
 </script>
 
 <style lang="scss" scoped>
 .notes {
   font-size: 14px;
-  background: #f5f5f5;
   display: block;
   padding-left: 16px;
   display: flex;

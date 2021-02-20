@@ -1,14 +1,19 @@
 <template>
   <div>
     <Layout>
-      <ol class="tags">
-        <li v-for="tag in tags" :key="tag.id">
+      <div class="tags">
+        <router-link
+          :to="`/labels/edit/${tag.id}`"
+          v-for="tag in tags"
+          :key="tag.id"
+          class="tag"
+        >
           <span>{{ tag.name }}</span>
           <Icon name="icon-rightarrow" />
-        </li>
-      </ol>
+        </router-link>
+      </div>
       <div class="createTag-wrapper">
-        <button class="createTag" @click="createTag">新建标签</button>
+        <Button @click="createTag">新建标签</Button>
       </div>
     </Layout>
   </div>
@@ -17,10 +22,12 @@
 <script>
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-
 import tagListModel from "@/models/tagListModel.ts";
+import Button from "@/components/Button.vue";
 
-@Component
+@Component({
+  components: Button,
+})
 export default class Labels extends Vue {
   tags = tagListModel.fetch();
   createTag() {
@@ -44,7 +51,7 @@ export default class Labels extends Vue {
   background: #fff;
   font-size: 16px;
   padding-left: 16px;
-  > li {
+  > .tag {
     min-height: 44px;
     display: flex;
     align-items: center;
@@ -56,19 +63,6 @@ export default class Labels extends Vue {
       color: #666;
       margin-right: 16px;
     }
-  }
-}
-.createTag {
-  background: #767676;
-  color: #fff;
-  border-radius: 4px;
-  border: none;
-  height: 40px;
-  padding: 0 16px;
-  &-wrapper {
-    text-align: center;
-    padding: 16px;
-    margin-top: 44-16px;
   }
 }
 </style>
