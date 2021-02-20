@@ -53,7 +53,6 @@ export default class Tags extends Vue {
   display: flex;
   flex-direction: column-reverse;
   background: white;
-  min-height: calc(100% - 64px);
   > .current {
     > ul {
       display: flex;
