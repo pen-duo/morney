@@ -1,20 +1,25 @@
 <template>
   <Layout>
     <div class="navBar">
-      <Icon class="lefticon" name="icon-leftarrow" />
+      <Icon class="lefticon" name="icon-leftarrow" @click.native="goBack"/>
       <span class="title">编辑标签</span>
       <span class="righticon"></span>
     </div>
     <div class="form-wrapper">
-      <Notes filed-name="标签名" placeholder="请输入标签名"></Notes>
+      <Notes
+        :value="tag.name"
+        filed-name="标签名"
+        placeholder="请输入标签名"
+        @update:value="updateTag"
+      ></Notes>
     </div>
     <div class="button-wrapper">
-      <Button>删除标签</Button>
+      <Button @click="remove">删除标签</Button>
     </div>
   </Layout>
 </template>
 
-<script>
+<script lang="ts">
 import tagListModel from "@/models/tagListModel";
 import Notes from "@/components/Notes.vue";
 
@@ -25,17 +30,30 @@ import { Component } from "vue-property-decorator";
   components: { Notes },
 })
 export default class EditLabel extends Vue {
+  tag?: { id: string; name: string } = undefined;
   created() {
     const id = this.$route.params.id;
     tagListModel.fetch();
     const tags = tagListModel.data;
-    console.log(tags);
     const tag = tags.filter((item) => item.id === id)[0];
     if (tag) {
-      console.log(tag);
+      this.tag = tag;
     } else {
       this.$router.replace("/404");
     }
+  }
+  updateTag(name: string) {
+    if (this.tag) {
+      tagListModel.update(this.tag.id, name);
+    }
+  }
+  remove() {
+    if (this.tag) {
+      tagListModel.remove(this.tag.id);
+    }
+  }
+  goBack(){
+    this.$router.go(-1)
   }
 }
 </script>
