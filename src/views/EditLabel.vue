@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <div class="navBar">
-      <Icon class="lefticon" name="icon-leftarrow" @click.native="goBack"/>
+      <Icon class="lefticon" name="icon-leftarrow" @click.native="goBack" />
       <span class="title">编辑标签</span>
       <span class="righticon"></span>
     </div>
@@ -14,7 +14,7 @@
       ></Notes>
     </div>
     <div class="button-wrapper">
-      <Button @click="remove">删除标签</Button>
+      <Button @click.native="remove">删除标签</Button>
     </div>
   </Layout>
 </template>
@@ -22,12 +22,13 @@
 <script lang="ts">
 import tagListModel from "@/models/tagListModel";
 import Notes from "@/components/Notes.vue";
+import Button from "@/components/Button.vue";
 
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 
 @Component({
-  components: { Notes },
+  components: { Notes, Button },
 })
 export default class EditLabel extends Vue {
   tag?: { id: string; name: string } = undefined;
@@ -50,10 +51,12 @@ export default class EditLabel extends Vue {
   remove() {
     if (this.tag) {
       tagListModel.remove(this.tag.id);
+      alert("删除成功");
+      this.$router.go(-1);
     }
   }
-  goBack(){
-    this.$router.go(-1)
+  goBack() {
+    this.$router.go(-1);
   }
 }
 </script>

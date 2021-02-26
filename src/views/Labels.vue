@@ -13,7 +13,7 @@
         </router-link>
       </div>
       <div class="createTag-wrapper">
-        <Button @click="createTag">新建标签</Button>
+        <Button class="create" @click="createTag">新建标签</Button>
       </div>
     </Layout>
   </div>
@@ -26,20 +26,18 @@ import tagListModel from "@/models/tagListModel.ts";
 import Button from "@/components/Button.vue";
 
 @Component({
-  components: Button,
+  components: { Button },
 })
 export default class Labels extends Vue {
-  tags = tagListModel.fetch();
+  tags = window.tagList;
   createTag() {
     const name = window.prompt("请输入标签名");
     if (name) {
       const message = tagListModel.create(name);
       if (message === "duplicated") {
         window.alert("标签名重复");
-        console.log(message);
       } else if (message === "success") {
         window.alert("添加成功");
-        console.log(message);
       }
     }
   }
@@ -64,5 +62,9 @@ export default class Labels extends Vue {
       margin-right: 16px;
     }
   }
+}
+.createTag-wrapper {
+  text-align: center;
+  margin-top: 40px;
 }
 </style>

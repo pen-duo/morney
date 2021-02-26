@@ -1,14 +1,16 @@
 <template>
   <div>
     <Layout class-prefix="layout">
-      {{record}}
+      {{ record }}
       <NumberPad :value.sync="record.amount" @submit="saveRecord" />
       <Types :value.sync="record.type" />
-      <Notes
-        filed-name="备注"
-        placeholder="在这里输入备注"
-        @update:value="onUpdateNotes"
-      />
+      <div class="note">
+        <Notes
+          filed-name="备注"
+          placeholder="在这里输入备注"
+          @update:value="onUpdateNotes"
+        />
+      </div>
       <Tags :data-source.sync="tags" @update:selected="onUpdateTags" />
     </Layout>
   </div>
@@ -22,8 +24,10 @@ import Notes from "@/components/Notes.vue";
 import Types from "@/components/Types.vue";
 import NumberPad from "@/components/NumberPad.vue";
 import recordListModel from "@/models/recordListModel.ts";
+import tagListModel from "@/models/tagListModel";
 
 const recordList = recordListModel.fetch();
+const tagList = tagListModel.fetch();
 
 @Component({
   components: {
@@ -34,7 +38,7 @@ const recordList = recordListModel.fetch();
   },
 })
 export default class Money extends Vue {
-  tags = ["衣", "食", "住", "行"];
+  tags = window.tagList;
   recordList: RecordItem[] = recordList;
   record: RecordItem = {
     tags: [],
@@ -50,13 +54,11 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    const record2: RecordItem = recordListModel.clone(this.record);
-    record2.createdAt = new Date();
-    this.recordList.push(record2);
+   recordListModel.create(this.record)
   }
   @Watch("recordList")
   onRecordListChange() {
-    recordListModel.save(this.recordList);
+    recordListModel.save();
   }
 }
 </script>
@@ -64,6 +66,9 @@ export default class Money extends Vue {
 .layout-content {
   display: flex;
   flex-direction: column-reverse;
+}
+.note {
+  padding: 12px 0;
 }
 </style>
 <style lang="scss" scoped>

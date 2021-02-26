@@ -7,11 +7,11 @@
         <ul>
           <li
             v-for="item in dataSource"
-            :key="item"
+            :key="item.id"
             @click="toggle(item)"
             :class="{ selected: selectedTags.indexOf(item) >= 0 }"
           >
-            {{ item }}
+            {{ item.name }}
           </li>
         </ul>
       </div>
@@ -56,6 +56,7 @@ export default class Tags extends Vue {
   > .current {
     > ul {
       display: flex;
+      flex-wrap: wrap;
       > li {
         $bg: #d9d9d9;
         height: 24px;
@@ -64,6 +65,7 @@ export default class Tags extends Vue {
         border-radius: 12px;
         padding: 0 16px;
         margin-right: 12px;
+        margin-bottom: 5px;
         &.selected {
           background: darken($bg, 50%);
           color: #fff;
