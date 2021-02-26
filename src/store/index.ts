@@ -12,7 +12,7 @@ const store = new Vuex.Store({
   mutations: {
     // 在这里修改数据
     createRecord(state,record){
-      const record2:RecordItem = clone(record)
+      const record2: RecordItem = clone(record)
       record2.createdAt = new Date()
       state.recordList.push(record2)
     }
