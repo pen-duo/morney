@@ -27,7 +27,6 @@ import recordListModel from "@/models/recordListModel.ts";
 import tagListModel from "@/models/tagListModel";
 
 const recordList = recordListModel.fetch();
-const tagList = tagListModel.fetch();
 
 @Component({
   components: {
@@ -39,7 +38,7 @@ const tagList = tagListModel.fetch();
 })
 export default class Money extends Vue {
   tags = window.tagList;
-  recordList: RecordItem[] = recordList;
+  recordList = window.recordList;
   record: RecordItem = {
     tags: [],
     notes: "",
@@ -54,7 +53,7 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-   recordListModel.create(this.record)
+    recordListModel.create(this.record);
   }
   @Watch("recordList")
   onRecordListChange() {

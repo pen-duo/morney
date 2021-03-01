@@ -30,11 +30,11 @@ import { Component } from "vue-property-decorator";
   components: { Notes, Button },
 })
 export default class EditLabel extends Vue {
-  tag?: { id: string; name: string } = undefined;
+  tag?: Tag= undefined;
   created() {
     const id = this.$route.params.id;
-    const tag = window.findTag(id);
-    if (tag) {
+    this.tag = window.findTag(id);
+    if (this.tag) {
       this.tag = window.findTag(id);
     } else {
       this.$router.replace("/404");
