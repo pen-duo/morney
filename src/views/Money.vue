@@ -18,13 +18,14 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component ,Watch} from "vue-property-decorator";
 import Tags from "@/components/Tags.vue";
 import Notes from "@/components/Notes.vue";
 import Types from "@/components/Types.vue";
 import NumberPad from "@/components/NumberPad.vue";
 import recordListModel from "@/models/recordListModel.ts";
 
+import store from "@/store/index2";
 
 @Component({
   components: {
@@ -35,8 +36,8 @@ import recordListModel from "@/models/recordListModel.ts";
   },
 })
 export default class Money extends Vue {
-  tags = window.tagList;
-  recordList = window.recordList;
+  tags = store.tagList;
+  recordList = store.recordList;
   record: RecordItem = {
     tags: [],
     notes: "",
@@ -53,7 +54,10 @@ export default class Money extends Vue {
   saveRecord() {
     recordListModel.create(this.record);
   }
- 
+  @Watch("recordList")
+  onRecordListChange() {
+    recordListModel.save();
+  }
 }
 </script>
 <style lang="scss">
