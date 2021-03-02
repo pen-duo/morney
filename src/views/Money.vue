@@ -23,7 +23,6 @@ import Tags from "@/components/Tags.vue";
 import Notes from "@/components/Notes.vue";
 import Types from "@/components/Types.vue";
 import NumberPad from "@/components/NumberPad.vue";
-import recordStore from "@/store/recordStore";
 
 @Component({
   components: {

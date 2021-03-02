@@ -28,12 +28,17 @@ import { Component } from "vue-property-decorator";
 
 @Component({
   components: { Notes, Button },
+  computed: {
+    tag() {
+      return this.$store.state.currentTag;
+    },
+  },
 })
 export default class EditLabel extends Vue {
   tag?: Tag = undefined;
   created() {
     const id = this.$route.params.id;
-    // this.tag = store.findTag(id);
+    this.$store.commit("setCurrentTag", id);
     if (this.tag) {
       // TODO
       // this.tag = store.findTag(id);
