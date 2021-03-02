@@ -28,38 +28,28 @@ import { Component } from "vue-property-decorator";
 
 @Component({
   components: { Notes, Button },
-  computed: {
-    tag() {
-      return this.$store.state.currentTag;
-    },
-  },
 })
 export default class EditLabel extends Vue {
-  tag?: Tag = undefined;
+  get tag() {
+    return this.$store.state.currentTag;
+  }
   created() {
     const id = this.$route.params.id;
+    this.$store.commit("fetchTags");
     this.$store.commit("setCurrentTag", id);
-    if (this.tag) {
-      // TODO
-      // this.tag = store.findTag(id);
-    } else {
+    if (!this.tag) {
       this.$router.replace("/404");
     }
   }
   updateTag(name: string) {
     if (this.tag) {
-      // todo
-      // store.updateTag(this.tag.id, name);
+      this.$store.commit("updateTag", { id: this.tag.id, name });
     }
   }
   remove() {
-    // if (this.tag) {
-    //   if (store.removeTag(this.tag.id)) {
-    //     this.$router.back();
-    //   } else {
-    //     window.alert("删除失败");
-    //   }
-    // }
+    if (this.tag) {
+      this.$store.commit("removeTag", this.tag.id);
+    }
   }
   goBack() {
     this.$router.go(-1);
