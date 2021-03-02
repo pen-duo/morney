@@ -22,7 +22,6 @@
 <script lang="ts">
 import Notes from "@/components/Notes.vue";
 import Button from "@/components/Button.vue";
-import store from "@/store/index2";
 
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
@@ -34,26 +33,28 @@ export default class EditLabel extends Vue {
   tag?: Tag = undefined;
   created() {
     const id = this.$route.params.id;
-    this.tag = store.findTag(id);
+    // this.tag = store.findTag(id);
     if (this.tag) {
-      this.tag = store.findTag(id);
+      // TODO
+      // this.tag = store.findTag(id);
     } else {
       this.$router.replace("/404");
     }
   }
   updateTag(name: string) {
     if (this.tag) {
-      store.updateTag(this.tag.id, name);
+      // todo
+      // store.updateTag(this.tag.id, name);
     }
   }
   remove() {
-    if (this.tag) {
-      if (store.removeTag(this.tag.id)) {
-        this.$router.back();
-      } else {
-        window.alert("删除失败");
-      }
-    }
+    // if (this.tag) {
+    //   if (store.removeTag(this.tag.id)) {
+    //     this.$router.back();
+    //   } else {
+    //     window.alert("删除失败");
+    //   }
+    // }
   }
   goBack() {
     this.$router.go(-1);

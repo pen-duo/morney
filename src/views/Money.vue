@@ -11,21 +11,19 @@
           @update:value="onUpdateNotes"
         />
       </div>
-      <Tags :data-source.sync="tags" @update:selected="onUpdateTags" />
+      <Tags />
     </Layout>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component ,Watch} from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import Tags from "@/components/Tags.vue";
 import Notes from "@/components/Notes.vue";
 import Types from "@/components/Types.vue";
 import NumberPad from "@/components/NumberPad.vue";
-import recordListModel from "@/models/recordListModel.ts";
-
-import store from "@/store/index2";
+import recordStore from "@/store/recordStore";
 
 @Component({
   components: {
@@ -34,29 +32,28 @@ import store from "@/store/index2";
     Types,
     NumberPad,
   },
+  computed: {
+    recordList() {
+      return this.$store.state.recordList;
+    },
+  },
 })
 export default class Money extends Vue {
-  tags = store.tagList;
-  recordList = store.recordList;
   record: RecordItem = {
     tags: [],
     notes: "",
     type: "-",
     amount: 0,
   };
-  onUpdateTags(tags: string[]) {
-    this.record.tags = tags;
+  created() {
+    this.$store.commit("fetchRecords");
   }
   onUpdateNotes(notes: string) {
     this.record.notes = notes;
   }
 
   saveRecord() {
-    recordListModel.create(this.record);
-  }
-  @Watch("recordList")
-  onRecordListChange() {
-    recordListModel.save();
+    this.$store.commit("createRecord", this.record);
   }
 }
 </script>

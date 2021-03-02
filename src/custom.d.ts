@@ -14,8 +14,8 @@ interface Window {
     updateTag: TagListModel["update"];
     findTag: (id: string) => Tag | undefined;
     recordList: RecordItem[];
-    createRecord: (record: RecordItem) => void
-  }
+    createRecord: (record: RecordItem) => void;
+  };
 }
 type Tag = {
   id: string;

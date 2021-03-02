@@ -1,29 +1,35 @@
 <template>
-    <div class="tags">
-      <div class="news">
-        <button @click="create">新增标签</button>
-      </div>
-      <div class="current">
-        <ul>
-          <li
-            v-for="item in dataSource"
-            :key="item.id"
-            @click="toggle(item)"
-            :class="{ selected: selectedTags.indexOf(item) >= 0 }"
-          >
-            {{ item.name }}
-          </li>
-        </ul>
-      </div>
+  <div class="tags">
+    <div class="news">
+      <button @click="create">新增标签</button>
     </div>
+    <div class="current">
+      <ul>
+        <li
+          v-for="item in tagList"
+          :key="item.id"
+          @click="toggle(item)"
+          :class="{ selected: selectedTags.indexOf(item) >= 0 }"
+        >
+          {{ item.name }}
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
-@Component
+import { Component } from "vue-property-decorator";
+@Component({
+  computed:{
+    tagList(){
+      // return this.$store.fetchTags()
+      return []
+    }
+  }
+})
 export default class Tags extends Vue {
-  @Prop(Array) readonly dataSource: string[] | undefined;
   selectedTags: string[] = [];
   toggle(tag: string) {
     const index = this.selectedTags.indexOf(tag);
@@ -31,16 +37,16 @@ export default class Tags extends Vue {
       this.selectedTags.splice(index, 1);
     } else {
       this.selectedTags.push(tag);
-    } 
-    this.$emit("update:selected",this.selectedTags)
+    }
+    this.$emit("update:selected", this.selectedTags);
   }
   create() {
     const name = window.prompt("请输入标签名");
-    if (name === "") {
-      window.alert("标签名不能为空");
-    } else if (this.dataSource) {
-      this.$emit("update:dataSource", [...this.dataSource, name]);
+    if (!name) {
+      return window.alert("标签名不能为空");
     }
+    // TODO
+    // store.createTag(name);
   }
 }
 </script>
