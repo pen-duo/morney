@@ -63,5 +63,3 @@ export default class Money extends Vue {
   padding: 12px 0;
 }
 </style>
-<style lang="scss" scoped>
-</style>

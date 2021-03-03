@@ -3,9 +3,13 @@ type RecordItem = {
   notes: string;
   type: string;
   amount: number;
-  createdAt?: Date;
+  createdAt?: String;
 };
-
+type RootState = {
+  recordList: RecordItem[];
+  tagList: Tag[];
+  currentTag?: Tag;
+}
 interface Window {
   store: {
     tagList: Tag[];
