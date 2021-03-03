@@ -22,7 +22,7 @@ import Tags from "@/components/Tags.vue";
 import Notes from "@/components/Notes.vue";
 import Types from "@/components/Types.vue";
 import NumberPad from "@/components/NumberPad.vue";
-
+import recordTypeList from "@/constants/recordTypeList";
 @Component({
   components: {
     Tags,
@@ -35,6 +35,7 @@ export default class Money extends Vue {
   get recordList() {
     return this.$store.state.recordList;
   }
+  recordTypeList = recordTypeList;
   record: RecordItem = {
     tags: [],
     notes: "",
