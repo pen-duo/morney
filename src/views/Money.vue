@@ -2,7 +2,7 @@
   <div>
     <Layout class-prefix="layout">
       <NumberPad :value.sync="record.amount" @submit="saveRecord" />
-      <Types :value.sync="record.type" />
+      <Tabs :data-source="recordTypeList" :value.sync="record.type" />
       <div class="note">
         <Notes
           filed-name="备注"
@@ -20,15 +20,15 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Tags from "@/components/Tags.vue";
 import Notes from "@/components/Notes.vue";
-import Types from "@/components/Types.vue";
 import NumberPad from "@/components/NumberPad.vue";
 import recordTypeList from "@/constants/recordTypeList";
+import Tabs from "@/components/Tabs.vue";
 @Component({
   components: {
     Tags,
     Notes,
-    Types,
     NumberPad,
+    Tabs,
   },
 })
 export default class Money extends Vue {
